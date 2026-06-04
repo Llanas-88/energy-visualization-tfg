@@ -56,5 +56,6 @@ Universitat Oberta de Catalunya (UOC)
 Academic Year 2025-2026
 
 
-  <img width="1920" height="913" alt="image" src="https://github.com/user-attachments/assets/fa99d018-1d69-4a73-822e-2cd9da31efee" />
+  <img width="1906" height="918" alt="pla general" src="https://github.com/user-attachments/assets/bd19eab6-b9d6-49f3-b77f-a0b524533777" />
+
 
