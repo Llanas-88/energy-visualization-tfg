@@ -7,116 +7,11 @@
 
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="css/styles.css">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-#dashboard {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    background: #ffffff;
-    padding: 12px;
-    border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
-    width: 240px;
-    border-top: 6px solid #a6d96a;
-}
-
-#dashboard h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 20px;    
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-}
-
-#dashboard p {
-    margin: 10px 0;
-    font-size: 13px;
-}
-
-#dashboard b {
-    color: #333;
-}
-
-#dashboard span {
-    float: right;
-    font-weight: bold;
-    color: #d84315;
-}
-
-#map {
-    height: 100vh;
-}
-
-#legend {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    background: white;
-    padding: 12px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    font-size: 14px;
-}
-
-#legend h3 {
-    margin: 0 0 8px 0;
-    font-size: 14px;
-}
-
-#legend div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 4px;
-}
-
-#legend span {
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    margin-right: 8px;
-}
-
-#dashboardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#dashboardHeader h2 {
-    margin: 0;
-    font-size: 18px;
-}
-
-#toggleDashboard {
-    border: none;
-    background: #a6d96a;
-    color: #333;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 26px;
-    height: 26px;
-}
-
-#dashboard.collapsed {
-    width: 190px;
-}
-
-#dashboard.collapsed #dashboardContent {
-    display: none;
-}
-
-</style>
 
 
 </head>
@@ -132,28 +27,54 @@ body {
     <div id="dashboardContent">
 	<label for="escenari"><b>Escenari:</b></label>
 <select id="escenari">
-    <option value="1">Actual</option>
-    <option value="0.8">Millora eficiència 20%</option>
-    <option value="0.6">Millora eficiència 40%</option>
+	<option value="1">Situació actual 2024</option>
+	<option value="0.8">Rehabilitació moderada</option>
+	<option value="0.6">Rehabilitació intensiva</option>
 </select>
+	<br>
+
+	<label for="clima"><b>Escenari climàtic:</b></label>
+
+	<select id="clima">
+		<option value="normal">Any normal</option>
+		<option value="fred">Any fred</option>
+		<option value="caloros">Any calorós</option>
+	</select>
     <p><b>Edificis:</b> <span id="numEdificis">0</span></p>
     <p><b>Consum total:</b> <span id="totalConsum">0</span> MWh</p>
-	<p><b>Estalvi estimat:</b> <span id="estalviPercent">0%</span></p>
-    <p><b>Electricitat:</b> <span id="totalElectricitat">0</span> MWh</p>
-    <p><b>Gas:</b> <span id="totalGas">0</span> MWh</p>
-    <p><b>Aigua:</b> <span id="totalAigua">0</span> MWh</p>
-	<canvas id="consumChart"></canvas>
-	<div id="disclaimer">
-    <p><b>Nota:</b> Els escenaris de reducció (20% i 40%) són simulacions simplificades.</p>
-    <p>Per assolir aquestes millores es podrien aplicar mesures com:</p>
-    <ul>
-        <li>Millora de l'aïllament tèrmic dels edificis</li>
-        <li>Substitució d'equips per altres més eficients</li>
-        <li>Ús d'energies renovables (fotovoltaica)</li>
-        <li>Optimització dels hàbits de consum</li>
-	</ul>
-	<p><i>L’aigua es representa com a consum energètic estimat associat al seu ús (per exemple, escalfament o distribució).</i></p>
-</div>
+	<p><b>Variació consum:</b> <span id="estalviPercent">0%</span></p>
+		<div class="metric-card">
+		<div class="metric-info">
+			<div class="metric-icon">⚡</div>
+			<div>
+				<div class="metric-title">Electricitat</div>
+				<div class="metric-value"><span id="totalElectricitat">0</span> MWh</div>
+			</div>
+		</div>
+		<canvas id="electricitatChart"></canvas>
+	</div>
+
+	<div class="metric-card">
+		<div class="metric-info">
+			<div class="metric-icon">🔥</div>
+			<div>
+				<div class="metric-title">Gas</div>
+				<div class="metric-value"><span id="totalGas">0</span> MWh</div>
+			</div>
+		</div>
+		<canvas id="gasChart"></canvas>
+	</div>
+
+	<div class="metric-card">
+		<div class="metric-info">
+			<div class="metric-icon">💧</div>
+			<div>
+				<div class="metric-title">Aigua</div>
+				<div class="metric-value"><span id="totalAigua">0</span> m³</div>
+			</div>
+		</div>
+		<canvas id="aiguaChart"></canvas>
+	</div>
 </div>
 </div>
 
@@ -168,174 +89,12 @@ body {
     <div><span style="background:#d7191c"></span> Alt</div>
 </div>
 
-<script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
 
-var map = L.map('map').setView([41.18, 1.32], 14);
-
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors © CARTO'
-}).addTo(map);
-
-let geojson;
-let consumChart;
-let dadesOriginals;
-
-// Funció de colors segons el consum
-function getColor(value) {
-    return value > 40 ? '#d7191c' :
-           value > 15 ? '#fdae61' :
-           value > 7  ? '#ffffbf' :
-           value > 3  ? '#a6d96a' :
-                            '#1a9641';
-}
-
-// Carregar GeoJSON
-fetch('catllar_consum.geojson')
-.then(response => response.json())
-.then(data => {
-
-    dadesOriginals = data;
-
-    geojson = L.geoJSON(dadesOriginals, {
-style: function(feature) {
-
-    let factor = Number(document.getElementById("escenari")?.value || 1);
-
-    let consum = (Number(feature.properties.consum_total || 0) * factor) / 1000;
-
-    return {
-        fillColor: getColor(consum),
-        weight: 1,
-        opacity: 1,
-        color: '#333',
-        fillOpacity: 0.75
-    };
-},
-        onEachFeature: onEachFeature
-    }).addTo(map);
-
-    crearGrafic();
-
-    actualitzarEscenari(1);
-
-    document.getElementById("escenari").addEventListener("change", function() {
-        let factor = Number(this.value);
-        actualitzarEscenari(factor);
-    });
-
-});
-
-function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: function(e) {
-            e.target.setStyle({
-                weight: 3,
-                color: '#000',
-                fillOpacity: 0.9
-            });
-        },
-        mouseout: function(e) {
-            geojson.resetStyle(e.target);
-        }
-    });
-}
-
-function crearGrafic() {
-    consumChart = new Chart(document.getElementById("consumChart"), {
-        type: "bar",
-        data: {
-            labels: ["Electricitat", "Gas", "Aigua"],
-            datasets: [{
-                label: "Consum (MWh)",
-                data: [0, 0, 0],
-                backgroundColor: ["#66bb6a", "#bdbdbd", "#64b5f6"]
-            }]
-        },
-        options: {
-            responsive: true,
-            animation: {
-                duration: 15000,
-                easing: "easeOutQuart"
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
-function actualitzarEscenari(factor) {
-
-    let totalConsum = 0;
-    let totalElectricitat = 0;
-    let totalGas = 0;
-    let totalAigua = 0;
-    let numEdificis = dadesOriginals.features.length;
-	let estalvi = (1 - factor) * 100;
-
-    geojson.eachLayer(function(layer) {
-
-        let props = layer.feature.properties;
-
-			let consumTotal = (Number(props.consum_total || 0) * factor) / 1000;
-			let electricitat = (Number(props.consum_electricitat || 0) * factor) / 1000;
-			let gas = (Number(props.consum_gas || 0) * factor) / 1000;
-			let aigua = (Number(props.consum_aigua || 0) * factor) / 1000;
-
-        totalConsum += consumTotal;
-        totalElectricitat += electricitat;
-        totalGas += gas;
-        totalAigua += aigua;
-
-        layer.setStyle({
-    fillColor: getColor(consumTotal),
-    weight: 1,
-    fillOpacity: 0.75
-});
-
-        layer.bindPopup(
-            "<b>Consum total:</b> " + consumTotal.toLocaleString("ca-ES", {maximumFractionDigits: 0}) + " MWh<br>" +
-            "<b>Electricitat:</b> " + electricitat.toLocaleString("ca-ES", {maximumFractionDigits: 0}) + " MWh<br>" +
-            "<b>Gas:</b> " + gas.toLocaleString("ca-ES", {maximumFractionDigits: 0}) + " MWh<br>" +
-            "<b>Aigua:</b> " + aigua.toLocaleString("ca-ES", {maximumFractionDigits: 0}) + " MWh"
-        );
-    });
-
-    document.getElementById("numEdificis").textContent = numEdificis;
-	document.getElementById("estalviPercent").textContent = estalvi.toFixed(0) + "%";
-	document.getElementById("totalConsum").textContent = totalConsum.toLocaleString("ca-ES", {maximumFractionDigits: 0});
-    document.getElementById("totalElectricitat").textContent = totalElectricitat.toLocaleString("ca-ES", {maximumFractionDigits: 0});
-    document.getElementById("totalGas").textContent = totalGas.toLocaleString("ca-ES", {maximumFractionDigits: 0});
-    document.getElementById("totalAigua").textContent = totalAigua.toLocaleString("ca-ES", {maximumFractionDigits: 0});
-
-    consumChart.data.datasets[0].data = [
-        totalElectricitat,
-        totalGas,
-        totalAigua
-    ];
-
-    consumChart.update();
-}
-
-document.getElementById("toggleDashboard").addEventListener("click", function() {
-    let dashboard = document.getElementById("dashboard");
-
-    dashboard.classList.toggle("collapsed");
-
-    if (dashboard.classList.contains("collapsed")) {
-        this.textContent = "+";
-    } else {
-        this.textContent = "−";
-    }
-});
-</script>
+<script src="js/mapa_test.js"></script>
 
 </body>
 </html>
+
