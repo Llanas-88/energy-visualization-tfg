@@ -1,8 +1,29 @@
+/* ----------------------------------------------------
+   CSS3
+   ESTILS GENERALS DE L'APLICACIÓ
+
+   Aquest fitxer defineix:
+   - La distribució dels elements de la interfície.
+   - El panell de control (dashboard).
+   - La llegenda cartogràfica.
+   - Les targetes de mètriques energètiques.
+   - Els gràfics de consum.
+
+   L'objectiu és proporcionar una interfície clara,
+   senzilla i fàcil d'interpretar per a l'usuari.
+---------------------------------------------------- */
+
+/* Configuració general de la pàgina */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
+/* ----------------------------------------------------
+   DASHBOARD ENERGÈTIC
+---------------------------------------------------- */
+
+/* Panell principal situat sobre el mapa */
 #dashboard {
     position: absolute;
     top: 20px;
@@ -16,6 +37,7 @@ body {
     border-top: 6px solid #a6d96a;
 }
 
+/* Títol principal del dashboard */
 #dashboard h2 {
     margin-top: 0;
     margin-bottom: 15px;
@@ -24,24 +46,37 @@ body {
     padding-bottom: 8px;
 }
 
+/* Indicadors textuals del dashboard */
 #dashboard p {
     margin: 10px 0;
     font-size: 13px;
 }
 
+/* Etiquetes descriptives */
 #dashboard b {
     color: #333;
 }
 
+/* Valors numèrics destacats */
 #dashboard span {
     font-weight: bold;
     color: #d84315;
 }
 
+/* ----------------------------------------------------
+   MAPA PRINCIPAL
+---------------------------------------------------- */
+
+/* El mapa ocupa tota la finestra del navegador */
 #map {
     height: 100vh;
 }
 
+/* ----------------------------------------------------
+   LLEGENDA CARTOGRÀFICA
+---------------------------------------------------- */
+
+/* Contenidor de la llegenda */
 #legend {
     position: absolute;
     bottom: 20px;
@@ -54,17 +89,20 @@ body {
     font-size: 14px;
 }
 
+/* Títol de la llegenda */
 #legend h3 {
     margin: 0 0 8px 0;
     font-size: 14px;
 }
 
+/* Cada element de la llegenda */
 #legend div {
     display: flex;
     align-items: center;
     margin-bottom: 4px;
 }
 
+/* Mostra de color associada a cada rang de consum */
 #legend span {
     width: 18px;
     height: 18px;
@@ -72,17 +110,24 @@ body {
     margin-right: 8px;
 }
 
+/* ----------------------------------------------------
+   CAPÇALERA DEL DASHBOARD
+---------------------------------------------------- */
+
+/* Distribució horitzontal entre títol i botó */
 #dashboardHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Títol del panell */
 #dashboardHeader h2 {
     margin: 0;
     font-size: 18px;
 }
 
+/* Botó per mostrar o ocultar el dashboard */
 #toggleDashboard {
     border: none;
     background: #a6d96a;
@@ -94,19 +139,28 @@ body {
     height: 26px;
 }
 
+/* Estat plegat del dashboard */
 #dashboard.collapsed {
     width: 190px;
 }
 
+/* Oculta el contingut quan el panell està plegat */
 #dashboard.collapsed #dashboardContent {
     display: none;
 }
+
+/* ----------------------------------------------------
+   TARGETES DE MÈTRIQUES
+---------------------------------------------------- */
+
+/* Separació visual entre targetes */
 .metric-card {
     margin-top: 18px;
     padding-top: 10px;
     border-top: 1px solid #ddd;
 }
 
+/* Distribució de la icona i els valors */
 .metric-info {
     display: flex;
     align-items: center;
@@ -114,21 +168,29 @@ body {
     margin-bottom: 8px;
 }
 
+/* Icones de consum (electricitat, gas i aigua) */
 .metric-icon {
     font-size: 26px;
 }
 
+/* Nom de la mètrica */
 .metric-title {
     font-size: 15px;
     font-weight: bold;
 }
 
+/* Valor principal de la mètrica */
 .metric-value {
     font-size: 22px;
     font-weight: bold;
     color: #d84315;
 }
 
+/* ----------------------------------------------------
+   GRÀFICS DEL DASHBOARD
+---------------------------------------------------- */
+
+/* Dimensions reduïdes per adaptar-se al panell lateral */
 canvas {
     max-height: 70px !important;
     max-width: 190px !important;
