@@ -1,15 +1,22 @@
+<!-- HTML5 -->
+
 <!DOCTYPE html>
 
 <html>
 <head>
+	<!-- Codificació de caràcters per permetre accents i caràcters especials -->
     <meta charset="utf-8" />
+	<!-- Títol que apareix a la pestanya del navegador -->
     <title>Mapa consum Catllar</title>
 
-
+<!-- Full d'estils de Leaflet per poder representar correctament el mapa -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!-- Full d'estils propi de l'aplicació -->
 <link rel="stylesheet" href="css/styles.css">
 
+<!-- Llibreria Chart.js per crear els gràfics del dashboard -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Llibreria Leaflet per crear el visor cartogràfic -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 
@@ -18,13 +25,17 @@
 
 <body>
 
+<!-- Panell lateral amb els controls i indicadors energètics -->
 <div id="dashboard">
-    <div id="dashboardHeader">
+    
+	<!-- Capçalera del dashboard amb el títol i el botó per plegar/desplegar -->
+	<div id="dashboardHeader">
         <h2>Dashboard energètic</h2>
         <button id="toggleDashboard">−</button>
     </div>
 
-    <div id="dashboardContent">
+    <!-- Contingut principal del dashboard -->
+	<div id="dashboardContent">
 	<label for="escenari"><b>Escenari:</b></label>
 <select id="escenari">
 	<option value="1">Situació actual 2024</option>
@@ -33,6 +44,7 @@
 </select>
 	<br>
 
+	<!-- Selector de l'escenari climàtic simulat -->
 	<label for="clima"><b>Escenari climàtic:</b></label>
 
 	<select id="clima">
@@ -40,9 +52,12 @@
 		<option value="fred">Any fred</option>
 		<option value="caloros">Any calorós</option>
 	</select>
+	
+	<!-- Indicadors agregats del municipi -->
     <p><b>Edificis:</b> <span id="numEdificis">0</span></p>
     <p><b>Consum total:</b> <span id="totalConsum">0</span> MWh</p>
 	<p><b>Variació consum:</b> <span id="estalviPercent">0%</span></p>
+		<!-- Targeta d'indicador i gràfic per al consum elèctric -->
 		<div class="metric-card">
 		<div class="metric-info">
 			<div class="metric-icon">⚡</div>
@@ -54,6 +69,7 @@
 		<canvas id="electricitatChart"></canvas>
 	</div>
 
+	<!-- Targeta d'indicador i gràfic per al consum de gas -->
 	<div class="metric-card">
 		<div class="metric-info">
 			<div class="metric-icon">🔥</div>
@@ -65,6 +81,7 @@
 		<canvas id="gasChart"></canvas>
 	</div>
 
+	<!-- Targeta d'indicador i gràfic per al consum d'aigua -->
 	<div class="metric-card">
 		<div class="metric-info">
 			<div class="metric-icon">💧</div>
@@ -78,8 +95,10 @@
 </div>
 </div>
 
+<!-- Contenidor principal on Leaflet carrega el mapa -->
 <div id="map"></div>
 
+<!-- Llegenda de colors associada als rangs de consum energètic -->
 <div id="legend">
     <h3>Llegenda de consums</h3>
     <div><span style="background:#1a9641"></span> Baix</div>
@@ -89,12 +108,15 @@
     <div><span style="background:#d7191c"></span> Alt</div>
 </div>
 
+<!-- Llibreria Chart.js per crear els gràfics del dashboard -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Llibreria Leaflet per crear el visor cartogràfic -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Llibreria Proj4js per treballar amb transformacions de coordenades si fos necessari -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
 
+<!-- Script principal de l'aplicació: càrrega del mapa, dades i simulació energètica -->
 <script src="js/mapa_test.js"></script>
 
 </body>
 </html>
-
